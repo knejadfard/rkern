@@ -14,11 +14,19 @@ As a side goal to developing this kernel, I am planning on taking various notes,
 - [ ] (Optional) Migrate boot.asm to NASM?
 - [ ] Evaluate if libc++, libunwind, and friends can be integrated into the kernel
 
-Rest of the roadmap TBD...
+## Directly Running the Kernel Binary Using Qemu
+You can use the utility script `run-qemu.sh` to run the kernel binary directly in qemu, without having to use any iso images. The utility script executes the following command:
+```
+qemu-system-i386 -kernel build/rkern.bin
+```
 
-## Running the Kernel Using Qemu
-In order to test the kernel using Qemu in Debian, you need to install the package *qemu-system-x86* first. Then, you can use the utility script `run-qemu.sh` to run the kernel in Qemu.
+## Generating .iso Image
+The utility script `make-iso.sh` uses `grub-mkrescue` to generate a bootable iso image, with a very basic `grub.cfg` file that is located in the `iso/` folder. This process has a dependency on the `xorriso` package.
+
+In order to run the iso image using qemu:
+```
+qemu-system-i386 -cdrom build/rkern.iso
+```
 
 ## Special Thanks
 I have to dedicate this section to specially thank the makers and contributors of https://wiki.osdev.org.
-
