@@ -15,5 +15,9 @@ As a side goal to developing this kernel, I am planning on taking various notes,
 
 Rest of the roadmap TBD...
 
+## Running the Kernel Using Qemu
+In order to test the kernel using Qemu in Debian, you need to install the package *qemu-system-x86* first. Then, you can use the utility script `run-qemu.sh` to run the kernel in Qemu.
+
 ## Special Thanks
 I have to dedicate this section to specially thank the makers and contributors of https://wiki.osdev.org.
+
