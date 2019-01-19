@@ -1,8 +1,22 @@
-boot.o: src/boot.s
-	i686-linux-gnu-as -o boot.o src/boot.s
+OPTIONS=-m32 -Isrc/
+WARNS=-Wall -Wextra -pedantic
+COMMON=-ffreestanding -nostdlib -MMD -fstack-protector-strong $(OPTIONS) $(WARNS)
+LDFLAGS=-static -nostdlib -melf_i386 --strip-all --script=src/linker.ld
+CFLAGS=-std=gnu11 $(COMMON)
+CXXFLAGS=-std=c++14 -fno-exceptions -fno-rtti $(COMMON)
 
-kernel.o: src/kernel.c
-	i686-linux-gnu-gcc -c src/kernel.c -o kernel.o -std=gnu99 -ffreestanding -Wall
+COBJ=build/kernel.o
+ASMOBJ=build/boot.o
+OUT=build/rkern.bin
+
+all: $(COBJ) $(ASMOBJ)
+	$(LD) $(LDFLAGS) $(COBJ) $(ASMOBJ) -o $(OUT)
+
+build/%.o: src/%.asm
+	i686-gnu-as -o $@ $<
+
+build/%.o: src/%.c
+	$(CC) -target i386 $(CFLAGS) -c $< -o $@
 
 clean:
-	rm boot.o
+	rm -r build/
