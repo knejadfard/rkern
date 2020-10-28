@@ -9,6 +9,7 @@ As a side goal to developing this kernel, I am planning on taking various notes,
 ## Roadmap
 - [x] Compile and run a bare-bones kernel in C
 - [ ] Migrate the kernel source to C++ (will probablly have to be pure C++ without any libraries)
+- [ ] Migrate from Make to CMake and add ability to use GCC or Clang using a CMake option
 - [ ] (Optional) Migrate boot.s to NASM
 - [ ] Evaluate if libc++, libunwind, and friends can be integrated into the kernel
 
