@@ -4,6 +4,7 @@ TARGET_OPTS=--target=i686-pc-none-elf
 INCLUDES=-Iinclude/
 LDFLAGS=-melf_i386 -static -nostdlib --strip-all --script=src/linker.ld
 CXXFLAGS=$(TARGET_OPTS) -std=c++17 -fno-exceptions -fno-rtti -ffreestanding -fno-builtin -nostdlib -nostdinc -nostdinc++ $(INCLUDES)
+OPTIMIZATIONS=
 ASMFLAGS=$(TARGET_OPTS)
 
 COBJ=build/kernel.o
@@ -20,7 +21,7 @@ build/%.o: src/%.asm
 	$(CC) $(ASMFLAGS) -c -o $@ $<
 
 build/%.o: src/%.cpp
-	$(CC) $(CXXFLAGS) -c -o $@ $<
+	$(CC) $(CXXFLAGS) $(OPTIMIZATIONS) -c -o $@ $<
 
 clean:
 	rm -r build/
