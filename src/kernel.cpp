@@ -8,16 +8,11 @@
   #error "This tutorial needs to be compiled with a ix86-elf compiler"
 #endif
 
-#include "numeric_types.hpp"
+#include "types.hpp"
 #include "vga.hpp"
+#include "utility.hpp"
 
-size_t strlen(const char* str)
-{
-	size_t len = 0;
-	while (str[len])
-		len++;
-	return len;
-}
+using namespace rkern;
 
 size_t terminal_row;
 size_t terminal_column;
@@ -67,7 +62,7 @@ void terminal_write(const char* data, size_t size)
 
 void terminal_writestring(const char* data)
 {
-	terminal_write(data, strlen(data));
+	terminal_write(data, utility::string::length(data));
 }
 
 extern "C" void kernel_main()

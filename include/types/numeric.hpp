@@ -1,5 +1,5 @@
-#ifndef RKERN_NUMERIC_TYPES_HPP
-#define RKERN_NUMERIC_TYPES_HPP
+#ifndef RKERN_TYPE_NUMERIC_HPP
+#define RKERN_TYPE_NUMERIC_HPP
 
 using size_t = unsigned int;
 using uint8_t = unsigned int;

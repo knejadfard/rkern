@@ -3,7 +3,7 @@ CC=clang++
 TARGET_OPTS=--target=i686-pc-none-elf
 INCLUDES=-Iinclude/
 LDFLAGS=-melf_i386 -static -nostdlib --strip-all --script=src/linker.ld
-CXXFLAGS=$(TARGET_OPTS) -std=c++14 -fno-exceptions -fno-rtti -ffreestanding -fno-builtin -nostdlib -nostdinc -nostdinc++ $(INCLUDES)
+CXXFLAGS=$(TARGET_OPTS) -std=c++17 -fno-exceptions -fno-rtti -ffreestanding -fno-builtin -nostdlib -nostdinc -nostdinc++ $(INCLUDES)
 ASMFLAGS=$(TARGET_OPTS)
 
 COBJ=build/kernel.o
