@@ -7,12 +7,8 @@ namespace rkern {
 
     class Terminal {
     public:
-        Terminal()
+        Terminal() : row_{0}, column_{0}, color_{vga::entry_color(vga::Color::LIGHT_GREY, vga::Color::BLACK)}, buffer_{(uint16_t*) 0xB8000}
         {
-            row_ = 0;
-            column_ = 0;
-            color_ = vga::entry_color(vga::Color::LIGHT_GREY, vga::Color::BLACK);
-            buffer_ = (uint16_t*) 0xB8000;
             for (size_t y = 0; y < vga::HEIGHT; y++) {
                 for (size_t x = 0; x < vga::WIDTH; x++) {
                     const size_t index = y * vga::WIDTH + x;
