@@ -1,0 +1,25 @@
+CC=clang++
+
+TARGET_OPTS=--target=i686-pc-none-elf
+LDFLAGS=-melf_i386 -static -nostdlib --strip-all --script=src/linker.ld
+CXXFLAGS=$(TARGET_OPTS) -std=c++14 -fno-exceptions -fno-rtti -ffreestanding -fno-builtin -nostdlib -nostdinc -nostdinc++ -Isrc/
+ASMFLAGS=$(TARGET_OPTS)
+
+COBJ=build/kernel.o
+ASMOBJ=build/boot.o
+OUT=build/rkern.bin
+
+all: mkdirs $(ASMOBJ) $(COBJ)
+	$(LD) $(LDFLAGS) -o $(OUT) $(COBJ) $(ASMOBJ)
+
+mkdirs:
+	mkdir -p build/
+
+build/%.o: src/%.asm
+	$(CC) $(ASMFLAGS) -c -o $@ $<
+
+build/%.o: src/%.cpp
+	$(CC) $(CXXFLAGS) -c -o $@ $<
+
+clean:
+	rm -r build/

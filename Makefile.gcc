@@ -15,8 +15,8 @@ all: $(COBJ) $(ASMOBJ)
 build/%.o: src/%.asm
 	i686-gnu-as -o $@ $<
 
-build/%.o: src/%.c
-	$(CC) -target i386 $(CFLAGS) -c $< -o $@
+build/%.o: src/%.cpp
+	i686-gnu-gcc -target i386 $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -r build/
