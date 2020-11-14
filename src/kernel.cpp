@@ -1,21 +1,14 @@
 // Check if the compiler thinks the wrong operating system is being targetted.
 #if defined(__linux__)
-#error "Not using a cross-compiler. This is probably a bad idea."
+  #error "Not using a cross-compiler. This is probably a bad idea."
 #endif
 
 // Currently rkern only works for 32-bit ix86 targets.
 #if !defined(__i386__)
-#error "This tutorial needs to be compiled with a ix86-elf compiler"
+  #error "This tutorial needs to be compiled with a ix86-elf compiler"
 #endif
 
-using size_t = unsigned int;
-using uint8_t = unsigned int;
-using uint16_t = unsigned long int;
-using uint32_t = unsigned long long int;
-using int8_t = int;
-using int16_t = long int;
-using int32_t = long long int;
-
+#include "numeric_types.hpp"
 #include "vga.hpp"
 
 size_t strlen(const char* str)
