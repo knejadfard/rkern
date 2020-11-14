@@ -13,10 +13,8 @@
 #include "utility.hpp"
 #include "terminal.hpp"
 
-using namespace rkern;
-
 extern "C" void kernel_main()
 {
-    Terminal terminal;
+    rkern::Terminal terminal;
 	terminal.write_string("Hello, kernel World!\n");
 }
