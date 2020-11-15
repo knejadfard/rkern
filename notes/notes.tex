@@ -21,6 +21,12 @@
 \usepackage{graphicx}
 %------------------------------
 
+% --------------------
+% Bibliography configurations
+% --------------------
+\usepackage[backend=biber, sorting=none]{biblatex}
+\bibliography{notes.bib}
+
 \title{Research Kernel}
 \author{Kian Nejadfard}
 
@@ -46,7 +52,10 @@
         \begin{itemize}
             \item \textbf{August 2018} - The idea started.
             \item \textbf{September/October 2018} - Built a home office and a PC.
-            \item \textbf{January 2019} - Started research on kernels and operating systems, and created the source repository.
+            \item \textbf{January 2019} - Started research on kernels and operating systems, and created the source repository. I used \textit{osdev.org}\cite{osdev} extensively to learn about the steps it takes to write a basic kernel from scratch.
+            \item \textbf{January 2020} - Finished master's degree courses, no thesis work done yet. The kernel research project has been quiet for a year now as I could not find time to make progress.
+            \item \textbf{February 2020} - Changed jobs,
+            \item \textbf{November 2020} - Started working on the kernel research project again. Chose the name \textit{RKern} for it, and set the project vision.
         \end{itemize}
     
     \chapter{History of Today's Kernels}
@@ -56,4 +65,6 @@
         This chapter talks about the LLVM toolchain and how it can be used for cross-compiling for different target architectures, which is essential when developing kernels.
     
     \section{Cross-compiling with LLVM/Clang}
+    
+    \printbibliography
 \end{document}
