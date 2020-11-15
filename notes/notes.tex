@@ -1,0 +1,70 @@
+\documentclass[a4paper,12pt,twoside]{book}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+
+%------------------------------
+% Header settings for all pages
+%------------------------------
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Kian Nejadfard}
+\lhead{Research Kernel}
+%------------------------------
+
+%------------------------------
+% For timeline
+%------------------------------
+\newcommand{\foo}{\hspace{-2.3pt}$\bullet$ \hspace{5pt}}
+\usepackage{graphicx}
+%------------------------------
+
+% --------------------
+% Bibliography configurations
+% --------------------
+\usepackage[backend=biber, sorting=none]{biblatex}
+\bibliography{notes.bib}
+
+\title{Research Kernel}
+\author{Kian Nejadfard}
+
+\begin{document}
+    \maketitle
+    
+    \section*{Motivation}
+        My main motivations for starting this project are:
+        \begin{itemize}
+            \item \textbf{Learn more about the internals of kernels}.
+            
+            I am a firm believer in learning by doing. Therefore, in my opinion, the best method for learning how kernels work is by making one from scratch. Of course, this is re-inventing a wheel that has been re-invented by many other people so far. However, I see a lot of value in doing so.
+            \item \textbf{Putting an idea to test: C++ for kernel development}.
+            
+            Given that I have always been interested in C++ and have worked with this language a lot since the day that I started programming for the first time, I have been searching for reasons why most kernels (well, perhaps all mainstream kernels today?) are developed in C, and not C++. I have a hypothesis that, using C++ can bring many values for kernel development. Times have changed since the 1990s, and C++ has evolved a lot. Along with C++, the tooling has also evolved a lot. When searching for an answer to "Why basically all kernels in use today are developed with C and not C++?", I have come across a lot of rants about how unfit C++ is for such a task, how unreliable the C++ compilers are, and similar negative talks.
+            % REFINE THE PREVIOUS PARAGRAPH AND LINK TO CHAPTER ONE, WHICH HAS REFERENCES TO VARIOUS DISCUSSIONS, LITERATURE, ETC.
+            
+            I believe that the C++ community has come a very long way since the early days of this language, and that it is time to put this idea to test. I believe that C++ has quite a bit to offer in terms of expressiveness and language constructs, that can benefit kernel development. 
+        \end{itemize}
+
+    \section*{Timeline}
+        The following is a timeline of key events in this project:
+        \begin{itemize}
+            \item \textbf{August 2018} - The idea started.
+            \item \textbf{September/October 2018} - Built a home office and a PC.
+            \item \textbf{January 2019} - Started research on kernels and operating systems, and created the source repository. I used \textit{osdev.org}\cite{osdev} extensively to learn about the steps it takes to write a basic kernel from scratch.
+            \item \textbf{January 2020} - Finished master's degree courses, no thesis work done yet. The kernel research project has been quiet for a year now as I could not find time to make progress.
+            \item \textbf{February 2020} - Changed jobs,
+            \item \textbf{November 2020} - Started working on the kernel research project again. Chose the name \textit{RKern} for it, and set the project vision.
+        \end{itemize}
+    
+    \chapter{History of Today's Kernels}
+        TODO: review how Unix, Linux, BSDs, etc. were started. Including a timeline, and also review the timeline of Assembly, C, and C++. The idea is to find out if the main reason for today's kernels' use of C is just the time that they started development and the fact that C was the best and only sane choice at the time. Clearly, after decades of development, you can't just change languages of the kernel. So... maybe it is time for a fresh start!
+
+    \chapter{The LLVM Toolchain}
+        This chapter talks about the LLVM toolchain and how it can be used for cross-compiling for different target architectures, which is essential when developing kernels.
+    
+    \section{Cross-compiling with LLVM/Clang}
+    
+    \printbibliography
+\end{document}
