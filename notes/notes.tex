@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt,twoside]{book}
+\documentclass[a4paper,12pt,twoside]{report}
 
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
@@ -33,38 +33,69 @@
 \begin{document}
     \maketitle
     
-    \section*{Motivation}
-        My main motivations for starting this project are:
-        \begin{itemize}
-            \item \textbf{Learn more about the internals of kernels}.
-            
-            I am a firm believer in learning by doing. Therefore, in my opinion, the best method for learning how kernels work is by making one from scratch. Of course, this is re-inventing a wheel that has been re-invented by many other people so far. However, I see a lot of value in doing so.
-            \item \textbf{Putting an idea to test: C++ for kernel development}.
-            
-            Given that I have always been interested in C++ and have worked with this language a lot since the day that I started programming for the first time, I have been searching for reasons why most kernels (well, perhaps all mainstream kernels today?) are developed in C, and not C++. I have a hypothesis that, using C++ can bring many values for kernel development. Times have changed since the 1990s, and C++ has evolved a lot. Along with C++, the tooling has also evolved a lot. When searching for an answer to "Why basically all kernels in use today are developed with C and not C++?", I have come across a lot of rants about how unfit C++ is for such a task, how unreliable the C++ compilers are, and similar negative talks.
-            % REFINE THE PREVIOUS PARAGRAPH AND LINK TO CHAPTER ONE, WHICH HAS REFERENCES TO VARIOUS DISCUSSIONS, LITERATURE, ETC.
-            
-            I believe that the C++ community has come a very long way since the early days of this language, and that it is time to put this idea to test. I believe that C++ has quite a bit to offer in terms of expressiveness and language constructs, that can benefit kernel development. 
-        \end{itemize}
+    \begin{abstract}
+    	RKern is my new research project for developing a kernel from scratch in C++ to evaluate how the use of zero-overhead abstraction mechanisms can affect a kernel project in terms of codebase maintainability, modularity, usability, and performance.
+    \end{abstract}
 
-    \section*{Timeline}
-        The following is a timeline of key events in this project:
-        \begin{itemize}
-            \item \textbf{August 2018} - The idea started.
-            \item \textbf{September/October 2018} - Built a home office and a PC.
-            \item \textbf{January 2019} - Started research on kernels and operating systems, and created the source repository. I used \textit{osdev.org}\cite{osdev} extensively to learn about the steps it takes to write a basic kernel from scratch.
-            \item \textbf{January 2020} - Finished master's degree courses, no thesis work done yet. The kernel research project has been quiet for a year now as I could not find time to make progress.
-            \item \textbf{February 2020} - Changed jobs,
-            \item \textbf{November 2020} - Started working on the kernel research project again. Chose the name \textit{RKern} for it, and set the project vision.
-        \end{itemize}
+	\chapter{Preface}
     
-    \chapter{History of Today's Kernels}
-        TODO: review how Unix, Linux, BSDs, etc. were started. Including a timeline, and also review the timeline of Assembly, C, and C++. The idea is to find out if the main reason for today's kernels' use of C is just the time that they started development and the fact that C was the best and only sane choice at the time. Clearly, after decades of development, you can't just change languages of the kernel. So... maybe it is time for a fresh start!
-
-    \chapter{The LLVM Toolchain}
-        This chapter talks about the LLVM toolchain and how it can be used for cross-compiling for different target architectures, which is essential when developing kernels.
+	    \section{Motivation}
+	    	I have always been interested in how software and hardware work together. Naturally this translated into me being curious about kernels. After all, a kernel is the entity that controls and provides mechanisms for accessing resources by user-space software.
+	    	
+	    	After going through my master's degree coursework, I became more familiar with topics such as the Linux kernel's programming interface along with how parts of the kernel work internally, the assembly language (I mostly used \textit{NASM}), computer and instruction set architecture, how CPUs work internally, basics of compilers and language design.
+	    	
+	    	All of a sudden, I noticed something: the board is set for me to follow two of my lifelong interests. \textit{Developing a kernel from scratch}, and \textit{working with embedded systems}.
+	    	It was at this point that I felt more confident about all of this. I could finally understand what's going on at the hardware level, and what it would take for software to "talk" to hardware.
+	    
+	    \section{Goals}
+	        My primary goals for this project and paper are:
+	        \begin{itemize}
+	            \item \textbf{Learn more about the internals of kernels}.
+	            I am a firm believer in learning by doing. Therefore, in my opinion, the best method for learning how kernels work is by making one from scratch. Of course, this is re-inventing a wheel that has been re-invented by many other people so far. However, I see a lot of value in doing this.
+	
+	            \item \textbf{Putting a claim to test: Low-overhead abstraction mechanisms in the kernel}.            
+	            Given that I have always been interested in C++ and have worked with this language a lot since the day that I started programming for the first time. I have been searching for reasons why most kernels are developed in C, and not C++. I have a hypothesis that using C++ and its low-overhead abstraction mechanisms can add many values to kernel development. Times have changed since the 1990s, and C++ has evolved a lot. Along with C++, the tooling has also evolved a lot. When searching for an answer to \textit{"Why basically all kernels in use today are developed with C and not C++?"}, I have come across a lot of rants about how unfit C++ is for such a task, how unreliable the C++ compilers are, and similar negative talks. I am putting such arguments to test in this research.
+	            % REFINE THE PREVIOUS PARAGRAPH AND ADD REFERENCES? MAYBE REPHRASE A BIT.
+	        \end{itemize}
+	
+	    \section*{Timeline}
+	        The following is a timeline of key events in this project:
+	        \begin{itemize}
+	            \item \textbf{August 2018} - The idea started.
+	            \item \textbf{September/October 2018} - Built a home office and a PC.
+	            \item \textbf{January 2019} - Started research on kernels and operating systems, and created the source repository. I used \textit{osdev.org}\cite{osdev} extensively to learn about the steps it takes to write a basic kernel from scratch.
+	            \item \textbf{January 2020} - Finished master's degree courses, no thesis work done yet. The kernel research project has been quiet for a year now as I could not find time to make progress.
+	            \item \textbf{February 2020} - Changed jobs,
+	            \item \textbf{November 2020} - Started working on the kernel research project again. Chose the name \textit{RKern} for it, and set the project vision.
+	        \end{itemize}
     
-    \section{Cross-compiling with LLVM/Clang}
+    \chapter{Kernels, What They Are, And How They Differ}
+    
+	    \section{What Is a Kernel?}
+	    	TODO
+	    
+	    \section{Kernel Types}
+	    	TODO
+	    
+	    \section{A Brief History}
+	        TODO: review how Unix, Linux, BSDs, etc. were started. Including a timeline, and also review the timeline of Assembly, C, and C++. The idea is to find out if the main reason for today's kernels' use of C is just the time that they started development and the fact that C was the best and only sane choice at the time. Clearly, after decades of development, you can't just change languages of the kernel. So... maybe it is time for a fresh start!
+	
+    \chapter{Prerequisites And Development Setup}
+    
+	    \section{Cross-Compiling}
+	        Since I am compiling the RKern source code on an x86\_64 machine (host) while targeting different architectures (e.g. x86\_32 or RV) (correct wording?), I need to use a cross-compiler.
+	        
+	        \subsection{LLVM}
+	        If using the LLVM toolchain, it is much easier to cross-compile to different targets mainly due to the fact that you don't need to setup anything differently. Just the fact that you have LLVM set up means you can use compilation targets other than your host machine.
+	        For example, to use clang++ to compile a C++ source file for i386 architecture, the \verb|--target=i686-pc-none-elf| flag can be used. Similarly, to target the 32-bit RISC-V architecture, \verb|--target=riscv32-unknown-elf| can be used.
+	
+			\subsection{GCC}
+	        TODO: add notes for setting up cross-compiler for GCC toolchain.
+	    
+	    \section{Building .iso Images}
+	    TODO
+	    Dependencies: grub-mkrescue, xorriso
+    
     
     \printbibliography
 \end{document}
