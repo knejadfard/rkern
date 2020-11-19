@@ -18,6 +18,9 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     # Clang or AppleClang
     target_compile_options(rkern PUBLIC --target=i686-pc-none-elf)
     target_link_options(rkern PUBLIC -m32 -static -fuse-ld=ld "LINKER:--script=${PROJECT_SOURCE_DIR}/src/linker.ld")
+    if(STRIP_SYMBOLS)
+        target_link_options(rkern PUBLIC "LINKER:--strip-all")
+    endif()
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # GCC
     target_link_options(rkern PUBLIC -m32 -static -fuse-ld=ld "LINKER:--script=${PROJECT_SOURCE_DIR}/src/linker.ld")
