@@ -14,7 +14,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "rkern.bin")
 
 target_include_directories(rkern PUBLIC "${PROJECT_SOURCE_DIR}/include")
 
-# TODO are all of these flags universal between GCC and Clang??
 target_compile_options(rkern PUBLIC -fno-exceptions -fno-rtti -ffreestanding -fno-builtin -nostdlib -nostdinc -nostdinc++)
 target_link_options(rkern PUBLIC -static -nostdlib)
 
@@ -28,7 +27,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     target_compile_options(rkern PUBLIC --target=i686-pc-none-elf)
     target_link_options(rkern PUBLIC -m32 -static)
     if(USE_LLD)
-        target_link_options(rkern PUBLIC -fuse-ld=lld "LINKER:--script=${PROJECT_SOURCE_DIR}/src/linker.lld")
+        target_link_options(rkern PUBLIC -fuse-ld=lld "LINKER:--script=${PROJECT_SOURCE_DIR}/src/linker.ld")
     else()
         target_link_options(rkern PUBLIC -fuse-ld=ld "LINKER:--script=${PROJECT_SOURCE_DIR}/src/linker.ld")
     endif()
