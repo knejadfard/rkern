@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 option(STRIP_SYMBOLS "Strip symbols when linking" OFF)
 option(USE_LLD "Use LLVM's LLD as linker (must use Clang for this to take effect)" ON)
+option(GEN_ASM "Generate assembly output to file during the build process" ON)
 
 add_executable(rkern ${PROJECT_SOURCE_DIR}/src/kernel.cpp ${PROJECT_SOURCE_DIR}/src/boot.asm)
 
@@ -16,6 +17,11 @@ target_include_directories(rkern PUBLIC "${PROJECT_SOURCE_DIR}/include")
 # TODO are all of these flags universal between GCC and Clang??
 target_compile_options(rkern PUBLIC -fno-exceptions -fno-rtti -ffreestanding -fno-builtin -nostdlib -nostdinc -nostdinc++)
 target_link_options(rkern PUBLIC -static -nostdlib)
+
+if(GEN_ASM)
+    # the following compiler flag is acceptable by both GCC and LLVM
+    target_compile_options(rkern PUBLIC -save-temps)
+endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     # Clang or AppleClang
