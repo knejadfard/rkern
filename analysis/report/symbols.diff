@@ -1,0 +1,41 @@
+2c2
+< with_ld/rkern.bin:     file format elf32-i386
+---
+> with_lld/rkern.bin:     file format elf32-i386
+5,12c5,7
+< 00100000 l    d  .text	00000000 .text
+< 00100210 l    d  .text._ZN5rkern8Terminal8put_charEc	00000000 .text._ZN5rkern8Terminal8put_charEc
+< 001002a0 l    d  .text._ZN5rkern8Terminal12write_stringEPKc	00000000 .text._ZN5rkern8Terminal12write_stringEPKc
+< 001002f0 l    d  .text._ZN5rkern8Terminal12put_entry_atEcjjj	00000000 .text._ZN5rkern8Terminal12put_entry_atEcjjj
+< 00100356 l    d  .rodata.str1.1	00000000 .rodata.str1.1
+< 00101000 l    d  .bss	00000000 .bss
+< 00000000 l    d  .comment	00000000 .comment
+< 00000000 l    df *ABS*	00000000 CMakeFiles/rkern.dir/src/boot.asm.o
+---
+> 00000000 l    df *ABS*	00000000 kernel.cpp
+> 00100110 l     F .text	00000021 _ZN5rkern3vgaL11entry_colorENS0_5ColorES1_
+> 00100140 l     F .text	00000022 _ZN5rkern3vgaL5entryEhj
+18,22c13,14
+< 00101000 l       .bss	00000000 stack_bottom
+< 00105000 l       .bss	00000000 stack_top
+< 00000000 l    df *ABS*	00000000 kernel.cpp
+< 00100110 l     F .text	00000021 _ZN5rkern3vgaL11entry_colorENS0_5ColorES1_
+< 00100140 l     F .text	00000022 _ZN5rkern3vgaL5entryEhj
+---
+> 00102000 l       .bss	00000000 stack_bottom
+> 00106000 l       .bss	00000000 stack_top
+24c16,19
+< 001002f0  w    F .text._ZN5rkern8Terminal12put_entry_atEcjjj	00000066 _ZN5rkern8Terminal12put_entry_atEcjjj
+---
+> 001002f0  w    F .text	00000066 _ZN5rkern8Terminal12put_entry_atEcjjj
+> 001002a0  w    F .text	00000048 _ZN5rkern8Terminal12write_stringEPKc
+> 00100170 g     F .text	00000056 _ZN5rkern8Terminal5writeEPKcj
+> 00100210  w    F .text	00000086 _ZN5rkern8Terminal8put_charEc
+25a21
+> 00100050 g     F .text	000000bc _ZN5rkern8TerminalC2Ev
+27d22
+< 00100210  w    F .text._ZN5rkern8Terminal8put_charEc	00000086 _ZN5rkern8Terminal8put_charEc
+29,31d23
+< 00100050 g     F .text	000000bc _ZN5rkern8TerminalC2Ev
+< 001002a0  w    F .text._ZN5rkern8Terminal12write_stringEPKc	00000048 _ZN5rkern8Terminal12write_stringEPKc
+< 00100170 g     F .text	00000056 _ZN5rkern8Terminal5writeEPKcj
