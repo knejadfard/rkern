@@ -3,7 +3,6 @@ name: Continuous Integration
 on: [push]
 
 env:
-  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Debug
 
 jobs:
@@ -29,4 +28,4 @@ jobs:
     - name: Build
       shell: bash
       working-directory: ${{runner.workspace}}/build
-      run: CC=clang CXX=clang++ cmake --build ${{runner.workspace}}/rkern --config $BUILD_TYPE
+      run: CC=clang CXX=clang++ cmake --build . --config $BUILD_TYPE
