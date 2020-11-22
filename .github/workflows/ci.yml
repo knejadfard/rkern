@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Checkout RKern
       uses: actions/checkout@v2
+      with:
+        path: rkern
 
     - name: Record Revision SHA
       shell: bash
@@ -40,6 +42,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: knejadfard/rkern-analysis
+        path: rkern-analysis
 
     - name: Create Analysis Directory
       shell: bash
