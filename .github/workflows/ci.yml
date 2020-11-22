@@ -16,7 +16,7 @@ jobs:
     - name: Record Revision SHA
       shell: bash
       working-directory: ${{runner.workspace}}/rkern
-      run: echo "rkern_sha=$(git rev-parse HEAD)" >> $GITHUB_ENV
+      run: echo "RKERN_SHA=$(git rev-parse HEAD | cut -c -7 -)" >> $GITHUB_ENV
 
     - name: Create Build Environment
       run: cmake -E make_directory ${{runner.workspace}}/build
@@ -44,14 +44,14 @@ jobs:
     - name: Create Analysis Directory
       shell: bash
       working-directory: ${{runner.workspace}}/rkern-analysis
-      run: mkdir ${{rkern_sha}}
+      run: mkdir ${RKERN_SHA}
 
     - name: Copy Kernel Assembly Files
       shell: bash
-      working-directory: ${{runner.workspace}}/rkern-analysis/${{rkern_sha}}
-      run: cp ${{runner.workspace}}/build/kernel.s ./kernel.s
+      working-directory: ${{runner.workspace}}/rkern-analysis
+      run: cp ${{runner.workspace}}/build/kernel.s ./${RKERN_SHA}/kernel.s
 
     - name: Commit Changes to knejadfard/rkern-analysis
       shell: bash
       working-directory: ${{runner.workspace}}/rkern-analysis
-      run: git add ./${{rkern_sha}} && git commit -m "Add analysis files for ${{rkern_sha}}" && git push origin main
+      run: git add ./${RKERN_SHA} && git commit -m "Add analysis files for ${RKERN_SHA}" && git push origin main
