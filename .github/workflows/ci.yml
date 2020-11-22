@@ -49,11 +49,11 @@ jobs:
 
       - name: Create Analysis Directory
         shell: bash
-        run: mkdir ${GITHUB_WORKSPACE}/rkern-analysis/${RKERN_SHA}
+        run: mkdir -p ${GITHUB_WORKSPACE}/rkern-analysis/files/${RKERN_SHA}
 
-      - name: Copy Kernel Assembly Files
+      - name: Copy Kernel Assembly File
         shell: bash
-        run: cp ${{runner.workspace}}/build/kernel.s ${GITHUB_WORKSPACE}/rkern-analysis/${RKERN_SHA}/kernel.s
+        run: cp ${{runner.workspace}}/build/kernel.s ${GITHUB_WORKSPACE}/rkern-analysis/files/${RKERN_SHA}/kernel.s
 
       - name: Commit Changes to knejadfard/rkern-analysis
         shell: bash
