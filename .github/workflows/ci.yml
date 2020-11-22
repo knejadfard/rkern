@@ -53,4 +53,4 @@ jobs:
       - name: Commit Changes to knejadfard/rkern-analysis
         shell: bash
         working-directory: rkern-analysis
-        run: git add ./${RKERN_SHA} && git commit -m "Add analysis files for ${RKERN_SHA}" --author="GitHubActions CI" && git push origin main
+        run: git add ./${RKERN_SHA} && git commit -m "Add analysis files for ${RKERN_SHA}" --author="GitHubActions CI <gha@github>" && git push origin main
