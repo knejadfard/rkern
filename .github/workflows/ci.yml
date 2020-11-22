@@ -42,6 +42,11 @@ jobs:
           repository: knejadfard/rkern-analysis
           path: rkern-analysis
 
+      - name: Set commit author
+        shell: bash
+        working-directory: rkern-analysis
+        run: git config user.name "GitHubActions CI" && git config user.email "gha@github"
+
       - name: Create Analysis Directory
         shell: bash
         run: mkdir ${GITHUB_WORKSPACE}/rkern-analysis/${RKERN_SHA}
@@ -53,4 +58,4 @@ jobs:
       - name: Commit Changes to knejadfard/rkern-analysis
         shell: bash
         working-directory: rkern-analysis
-        run: git add ./${RKERN_SHA} && git commit -m "Add analysis files for ${RKERN_SHA}" --author="GitHubActions CI <gha@github>" && git push origin main
+        run: git add ./${RKERN_SHA} && git commit -m "Add analysis files for ${RKERN_SHA}" && git push origin main
