@@ -15,7 +15,7 @@ jobs:
 
       - name: Record Revision SHA
         shell: bash
-        working-directory: ${{runner.workspace}}/rkern
+        working-directory: ${GITHUB_WORKSPACE}
         run: echo "RKERN_SHA=$(git rev-parse HEAD | cut -c -7 -)" >> $GITHUB_ENV
 
       - name: Create Build Environment
@@ -29,7 +29,7 @@ jobs:
       - name: Configure CMake
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: CC=clang CXX=clang++ cmake ${{runner.workspace}}/rkern/ -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DGEN_ASM=ON
+        run: CC=clang CXX=clang++ cmake ${GITHUB_WORKSPACE} -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DGEN_ASM=ON
 
       - name: Build
         shell: bash
@@ -41,19 +41,19 @@ jobs:
         with:
           token: ${{secrets.RKERN_ANALYSIS_REPO_TOKEN}}
           repository: knejadfard/rkern-analysis
-          path: ../rkern-analysis
+          path: rkern-analysis
 
       - name: Create Analysis Directory
         shell: bash
-        working-directory: ${{runner.workspace}}/rkern-analysis
+        working-directory: ${GITHUB_WORKSPACE}/rkern-analysis
         run: mkdir ${RKERN_SHA}
 
       - name: Copy Kernel Assembly Files
         shell: bash
-        working-directory: ${{runner.workspace}}/rkern-analysis
+        working-directory: ${GITHUB_WORKSPACE}/rkern-analysis
         run: cp ${{runner.workspace}}/build/kernel.s ./${RKERN_SHA}/kernel.s
 
       - name: Commit Changes to knejadfard/rkern-analysis
         shell: bash
-        working-directory: ${{runner.workspace}}/rkern-analysis
+        working-directory: ${GITHUB_WORKSPACE}/rkern-analysis
         run: git add ./${RKERN_SHA} && git commit -m "Add analysis files for ${RKERN_SHA}" && git push origin main
