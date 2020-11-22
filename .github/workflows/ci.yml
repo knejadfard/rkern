@@ -44,7 +44,7 @@ jobs:
 
       - name: Create Analysis Directory
         shell: bash
-        run: mkdir ${GITHUB_WORKSPACE}/rkern-analysis ${RKERN_SHA}
+        run: mkdir ${GITHUB_WORKSPACE}/rkern-analysis/${RKERN_SHA}
 
       - name: Copy Kernel Assembly Files
         shell: bash
