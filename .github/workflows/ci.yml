@@ -10,55 +10,55 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout RKern
-      uses: actions/checkout@v2
-      with:
-        path: rkern
-      env:
-        GITHUB_WORKSPACE: ${{runner.workspace}}
+      - name: Override GITHUB_WORKSPACE
+        shell: bash
+        run: echo "GITHUB_WORKSPACE=${{runner.workspace}}" >> $GITHUB_ENV
 
-    - name: Record Revision SHA
-      shell: bash
-      working-directory: ${{runner.workspace}}/rkern
-      run: echo "RKERN_SHA=$(git rev-parse HEAD | cut -c -7 -)" >> $GITHUB_ENV
+      - name: Checkout RKern
+        uses: actions/checkout@v2
+        with:
+          path: rkern
 
-    - name: Create Build Environment
-      run: cmake -E make_directory ${{runner.workspace}}/build
+      - name: Record Revision SHA
+        shell: bash
+        working-directory: ${{runner.workspace}}/rkern
+        run: echo "RKERN_SHA=$(git rev-parse HEAD | cut -c -7 -)" >> $GITHUB_ENV
 
-    - name: Echo CMake Version
-      shell: bash
-      working-directory: ${{runner.workspace}}/build
-      run: cmake --version
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{runner.workspace}}/build
 
-    - name: Configure CMake
-      shell: bash
-      working-directory: ${{runner.workspace}}/build
-      run: CC=clang CXX=clang++ cmake ${{runner.workspace}}/rkern/ -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DGEN_ASM=ON
+      - name: Echo CMake Version
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: cmake --version
 
-    - name: Build
-      shell: bash
-      working-directory: ${{runner.workspace}}/build
-      run: cmake --build . --config $BUILD_TYPE
+      - name: Configure CMake
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: CC=clang CXX=clang++ cmake ${{runner.workspace}}/rkern/ -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DGEN_ASM=ON
 
-    - name: Checkout RKern Analysis
-      uses: actions/checkout@v2
-      with:
-        repository: knejadfard/rkern-analysis
-        path: rkern-analysis
-      env:
-        GITHUB_WORKSPACE: ${{runner.workspace}}
+      - name: Build
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: cmake --build . --config $BUILD_TYPE
 
-    - name: Create Analysis Directory
-      shell: bash
-      working-directory: ${{runner.workspace}}/rkern-analysis
-      run: mkdir ${RKERN_SHA}
+      - name: Checkout RKern Analysis
+        uses: actions/checkout@v2
+        with:
+          repository: knejadfard/rkern-analysis
+          path: rkern-analysis
 
-    - name: Copy Kernel Assembly Files
-      shell: bash
-      working-directory: ${{runner.workspace}}/rkern-analysis
-      run: cp ${{runner.workspace}}/build/kernel.s ./${RKERN_SHA}/kernel.s
+      - name: Create Analysis Directory
+        shell: bash
+        working-directory: ${{runner.workspace}}/rkern-analysis
+        run: mkdir ${RKERN_SHA}
 
-    - name: Commit Changes to knejadfard/rkern-analysis
-      shell: bash
-      working-directory: ${{runner.workspace}}/rkern-analysis
-      run: git add ./${RKERN_SHA} && git commit -m "Add analysis files for ${RKERN_SHA}" && git push origin main
+      - name: Copy Kernel Assembly Files
+        shell: bash
+        working-directory: ${{runner.workspace}}/rkern-analysis
+        run: cp ${{runner.workspace}}/build/kernel.s ./${RKERN_SHA}/kernel.s
+
+      - name: Commit Changes to knejadfard/rkern-analysis
+        shell: bash
+        working-directory: ${{runner.workspace}}/rkern-analysis
+        run: git add ./${RKERN_SHA} && git commit -m "Add analysis files for ${RKERN_SHA}" && git push origin main
