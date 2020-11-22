@@ -39,6 +39,7 @@ jobs:
       - name: Checkout RKern Analysis
         uses: actions/checkout@v2
         with:
+          token: ${{secrets.RKERN_ANALYSIS_REPO_TOKEN}}
           repository: knejadfard/rkern-analysis
           path: rkern-analysis
 
