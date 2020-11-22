@@ -41,7 +41,7 @@ jobs:
         with:
           token: ${{secrets.RKERN_ANALYSIS_REPO_TOKEN}}
           repository: knejadfard/rkern-analysis
-          path: rkern-analysis
+          path: ../rkern-analysis
 
       - name: Create Analysis Directory
         shell: bash
