@@ -10,22 +10,52 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - name: Checkout RKern
+        uses: actions/checkout@v2
 
-    - name: Create Build Environment
-      run: cmake -E make_directory ${{runner.workspace}}/build
+      - name: Record Revision SHA
+        shell: bash
+        run: echo "RKERN_SHA=$(git rev-parse HEAD | cut -c -7 -)" >> $GITHUB_ENV
 
-    - name: Echo CMake Version
-      shell: bash
-      working-directory: ${{runner.workspace}}/build
-      run: cmake --version
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{runner.workspace}}/build
 
-    - name: Configure CMake
-      shell: bash
-      working-directory: ${{runner.workspace}}/build
-      run: CC=clang CXX=clang++ cmake ${{runner.workspace}}/rkern/ -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+      - name: Echo CMake Version
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: cmake --version
 
-    - name: Build
-      shell: bash
-      working-directory: ${{runner.workspace}}/build
-      run: cmake --build . --config $BUILD_TYPE
+      - name: Configure CMake
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: CC=clang CXX=clang++ cmake ${GITHUB_WORKSPACE} -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DGEN_ASM=ON
+
+      - name: Build
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: cmake --build . --config $BUILD_TYPE
+
+      - name: Checkout RKern Analysis
+        uses: actions/checkout@v2
+        with:
+          token: ${{secrets.RKERN_ANALYSIS_REPO_TOKEN}}
+          repository: knejadfard/rkern-analysis
+          path: rkern-analysis
+
+      - name: Set commit author
+        shell: bash
+        working-directory: rkern-analysis
+        run: git config user.name "GitHubActions CI" && git config user.email "gha@github"
+
+      - name: Create Analysis Directory
+        shell: bash
+        run: mkdir -p ${GITHUB_WORKSPACE}/rkern-analysis/files/${RKERN_SHA}
+
+      - name: Copy Kernel Assembly File
+        shell: bash
+        run: cp ${{runner.workspace}}/build/kernel.s ${GITHUB_WORKSPACE}/rkern-analysis/files/${RKERN_SHA}/kernel.s
+
+      - name: Commit Changes to knejadfard/rkern-analysis
+        shell: bash
+        working-directory: rkern-analysis
+        run: git add ./files/${RKERN_SHA} && git commit -m "Add analysis files for ${RKERN_SHA}" && git push origin main
