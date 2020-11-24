@@ -74,4 +74,5 @@ jobs:
       - name: Upload Metadata Archive For Analysis
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: curl -X POST --data-binary @"${RKERN_SHA}.tar.gz" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://rkern-analyzer.uc.r.appspot.com/upload
+        run: |
+          curl -X POST --data-binary @"${RKERN_SHA}.tar.gz" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://rkern-analyzer.uc.r.appspot.com/upload
