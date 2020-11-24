@@ -35,6 +35,23 @@ jobs:
         working-directory: ${{runner.workspace}}/build
         run: cmake --build . --config $BUILD_TYPE
 
+      - name: Create metadata.json file
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: |
+          echo "{\"sha1\": \"${RKERN_SHA}\", \"data\": [{\"fileName\": \"kernel.s\", \"fileSize\": \"$(stat --format='%s' kernel.s)\"}]}" > metadata.json
+
+      - name: Create Metadata Archive
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: tar -czf "${RKERN_SHA}.tar.gz" metadata.json kernel.s
+
+      - name: Upload Metadata Archive For Analysis
+        shell: bash
+        working-directory: ${{runner.workspace}}/build
+        run: |
+          curl -X POST --data-binary @"${RKERN_SHA}.tar.gz" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://rkern-analyzer.uc.r.appspot.com/upload
+
       - name: Checkout RKern Analysis
         uses: actions/checkout@v2
         with:
@@ -59,20 +76,3 @@ jobs:
         shell: bash
         working-directory: rkern-analysis
         run: git add ./files/${RKERN_SHA} && git commit -m "Add analysis files for ${RKERN_SHA}" && git push origin main
-
-      - name: Create metadata.json file
-        shell: bash
-        working-directory: ${{runner.workspace}}/build
-        run: |
-          echo "{\"sha1\": \"${RKERN_SHA}\", \"data\": [{\"fileName\": \"kernel.s\", \"fileSize\": \"$(stat --format='%s' kernel.s)\"}]}" > metadata.json
-
-      - name: Create Metadata Archive
-        shell: bash
-        working-directory: ${{runner.workspace}}/build
-        run: tar -czf "${RKERN_SHA}.tar.gz" metadata.json kernel.s
-
-      - name: Upload Metadata Archive For Analysis
-        shell: bash
-        working-directory: ${{runner.workspace}}/build
-        run: |
-          curl -X POST --data-binary @"${RKERN_SHA}.tar.gz" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://rkern-analyzer.uc.r.appspot.com/upload
