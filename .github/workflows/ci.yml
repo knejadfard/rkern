@@ -63,7 +63,8 @@ jobs:
       - name: Create metadata.json file
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: echo "{\"sha1\": \"${RKERN_SHA}\", \"data\": [{\"fileName\": \"kernel.s\", \"fileSize\": \"$(stat --format='%s' kernel.s)\"}]}" > metadata.json
+        run: |
+          echo "{\"sha1\": \"${RKERN_SHA}\", \"data\": [{\"fileName\": \"kernel.s\", \"fileSize\": \"$(stat --format='%s' kernel.s)\"}]}" > metadata.json
 
       - name: Create Metadata Archive
         shell: bash
