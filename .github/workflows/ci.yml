@@ -50,12 +50,12 @@ jobs:
         shell: bash
         working-directory: ${{runner.workspace}}/build
         run: |
-          curl -X POST --data-binary @"${RKERN_SHA}.tar.gz" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://rkern-analyzer.uc.r.appspot.com/upload
+          curl -X POST --data-binary @"${RKERN_SHA}.tar.gz" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -u "${{ RKERN_ANALYZER_USERNAME }}:${{ RKERN_ANALYZER_PASSWORD }}" https://rkern-analyzer.uc.r.appspot.com/upload
 
       - name: Checkout RKern Analysis
         uses: actions/checkout@v2
         with:
-          token: ${{secrets.RKERN_ANALYSIS_REPO_TOKEN}}
+          token: ${{ secrets.RKERN_ANALYSIS_REPO_TOKEN }}
           repository: knejadfard/rkern-analysis
           path: rkern-analysis
 
