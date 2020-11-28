@@ -46,10 +46,10 @@ jobs:
         working-directory: ${{runner.workspace}}/build
         run: tar -czf "${RKERN_SHA}.tar.gz" metadata.json kernel.s
 
-      - name: Download RKern Analyzer Client
+      - name: Run RKern Analyzer Client
         shell: bash
         working-directory: ${{runner.workspace}}/build
         env:
           KEY_JSON_SECRET: ${{ secrets.RKERN_ANALYZER_JSON_KEY_SECRET }}
         run: |
-          ./rka_client -keyPath key.json.asc -rkaBaseUrl https://rkern-analyzer.uc.r.appspot.com -metadataArchive metadata.tar.gz
+          ${GITHUB_WORKSPACE}/.github/workflows/rka_client -keyPath key.json.asc -rkaBaseUrl https://rkern-analyzer.uc.r.appspot.com -metadataArchive metadata.tar.gz
