@@ -52,4 +52,4 @@ jobs:
         env:
           KEY_JSON_SECRET: ${{ secrets.RKERN_ANALYZER_JSON_KEY_SECRET }}
         run: |
-          ${GITHUB_WORKSPACE}/.github/workflows/rka_client -keyPath key.json.asc -rkaBaseUrl https://rkern-analyzer.uc.r.appspot.com -metadataArchive metadata.tar.gz
+          ${GITHUB_WORKSPACE}/.github/workflows/rka_client -keyPath ${GITHUB_WORKSPACE}/.github/workflows/key.json.asc -rkaBaseUrl https://rkern-analyzer.uc.r.appspot.com -metadataArchive metadata.tar.gz
