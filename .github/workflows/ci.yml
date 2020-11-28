@@ -46,33 +46,10 @@ jobs:
         working-directory: ${{runner.workspace}}/build
         run: tar -czf "${RKERN_SHA}.tar.gz" metadata.json kernel.s
 
-      - name: Upload Metadata Archive For Analysis
+      - name: Download RKern Analyzer Client
         shell: bash
         working-directory: ${{runner.workspace}}/build
+        env:
+          KEY_JSON_SECRET: ${{ secrets.RKERN_ANALYZER_JSON_KEY_SECRET }}
         run: |
-          curl -X POST --data-binary @"${RKERN_SHA}.tar.gz" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" -u "${{ RKERN_ANALYZER_USERNAME }}:${{ RKERN_ANALYZER_PASSWORD }}" https://rkern-analyzer.uc.r.appspot.com/upload
-
-      - name: Checkout RKern Analysis
-        uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.RKERN_ANALYSIS_REPO_TOKEN }}
-          repository: knejadfard/rkern-analysis
-          path: rkern-analysis
-
-      - name: Set commit author
-        shell: bash
-        working-directory: rkern-analysis
-        run: git config user.name "GitHubActions CI" && git config user.email "gha@github"
-
-      - name: Create Analysis Directory
-        shell: bash
-        run: mkdir -p ${GITHUB_WORKSPACE}/rkern-analysis/files/${RKERN_SHA}
-
-      - name: Copy Kernel Assembly File
-        shell: bash
-        run: cp ${{runner.workspace}}/build/kernel.s ${GITHUB_WORKSPACE}/rkern-analysis/files/${RKERN_SHA}/kernel.s
-
-      - name: Commit Changes to knejadfard/rkern-analysis
-        shell: bash
-        working-directory: rkern-analysis
-        run: git add ./files/${RKERN_SHA} && git commit -m "Add analysis files for ${RKERN_SHA}" && git push origin main
+          ./rka_client -keyPath key.json.asc -rkaBaseUrl https://rkern-analyzer.uc.r.appspot.com -metadataArchive metadata.tar.gz
