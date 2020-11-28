@@ -44,7 +44,7 @@ jobs:
       - name: Create Metadata Archive
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: tar -czf "${RKERN_SHA}.tar.gz" metadata.json kernel.s
+        run: tar -czf metadata.tar.gz metadata.json kernel.s
 
       - name: Run RKern Analyzer Client
         shell: bash
