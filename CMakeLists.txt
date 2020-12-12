@@ -24,10 +24,10 @@ endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     # Clang or AppleClang
-    target_compile_options(rkern PUBLIC --target=i686-pc-none-elf)
-    target_link_options(rkern PUBLIC -m32 -static)
+    target_compile_options(rkern PUBLIC -target riscv32-none-elf -march=rv32imac -mno-relax)
+    target_link_options(rkern PUBLIC -target riscv32-none-elf)
     if(USE_LLD)
-        target_link_options(rkern PUBLIC -fuse-ld=lld "LINKER:--script=${PROJECT_SOURCE_DIR}/src/linker.ld")
+        target_link_options(rkern PUBLIC -fuse-ld=ld.lld "LINKER:--script=${PROJECT_SOURCE_DIR}/src/linker.ld")
     else()
         target_link_options(rkern PUBLIC -fuse-ld=ld "LINKER:--script=${PROJECT_SOURCE_DIR}/src/linker.ld")
     endif()
@@ -37,7 +37,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # GCC
     target_compile_options(rkern PUBLIC -m32)
-    target_link_options(rkern PUBLIC -m32 -static "LINKER:--script=${PROJECT_SOURCE_DIR}/src/linker.ld")
+    target_link_options(rkern PUBLIC "LINKER:--script=${PROJECT_SOURCE_DIR}/src/linker.ld")
 endif()
 
 enable_language(ASM)
