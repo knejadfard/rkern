@@ -10,6 +10,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Install LLD
+        shell: bash
+        run: |
+          sudo unlink /usr/bin/ld
+          sudo ln -s /usr/bin/ld.lld-9 /usr/bin/ld.lld
+          sudo ln -s /usr/bin/ld.lld /usr/bin/ld
+          ls -l /usr/bin | grep ld
+
+      - name: Echo CMake Version
+        shell: bash
+        run: cmake --version
+
+      - name: Echo Clang++ Version
+        shell: bash
+        run:  clang++ --version
+
+      - name: Echo ld Version
+        shell: bash
+        run: ld --version
+
+      - name: Echo lld Version
+        shell: bash
+        run: ld.lld --version
+
       - name: Checkout RKern
         uses: actions/checkout@v2
 
@@ -20,36 +44,21 @@ jobs:
       - name: Create Build Environment
         run: cmake -E make_directory ${{runner.workspace}}/build
 
-      - name: Echo CMake Version
-        shell: bash
-        working-directory: ${{runner.workspace}}/build
-        run: cmake --version
-
       - name: Configure CMake
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: CC=clang CXX=clang++ cmake ${GITHUB_WORKSPACE} -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DGEN_ASM=ON
+        run: CC=clang CXX=clang++ cmake ${GITHUB_WORKSPACE} -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DGEN_ASM=ON -DUSE_LLD=ON
 
       - name: Build
         shell: bash
         working-directory: ${{runner.workspace}}/build
         run: cmake --build . --config $BUILD_TYPE
 
-      - name: Create metadata.json file
-        shell: bash
-        working-directory: ${{runner.workspace}}/build
-        run: |
-          echo "{\"sha1\": \"${RKERN_SHA}\", \"data\": [{\"fileName\": \"kernel.s\", \"fileSize\": $(stat --format='%s' kernel.s)}]}" > metadata.json
-
-      - name: Create Metadata Archive
-        shell: bash
-        working-directory: ${{runner.workspace}}/build
-        run: tar -czf metadata.tar.gz metadata.json kernel.s
-
       - name: Run RKern Analyzer Client
         shell: bash
         working-directory: ${{runner.workspace}}/build
         env:
           KEY_JSON_SECRET: ${{ secrets.RKERN_ANALYZER_JSON_KEY_SECRET }}
+          RKA_SERVER: https://rkern-analyzer.uc.r.appspot.com
         run: |
-          ${GITHUB_WORKSPACE}/.github/workflows/rka_client -keyPath ${GITHUB_WORKSPACE}/.github/workflows/key.json.asc -rkaBaseUrl https://rkern-analyzer.uc.r.appspot.com -metadataArchive metadata.tar.gz
+          ${GITHUB_WORKSPACE}/.github/workflows/rka_client -keyPath ${GITHUB_WORKSPACE}/.github/workflows/key.json.asc -rkaBaseUrl ${RKA_SERVER} -sha1 ${RKERN_SHA} -kernel rkern.bin kernel.s
