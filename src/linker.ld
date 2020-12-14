@@ -12,43 +12,45 @@ MEMORY
     ram (rwxa) : ORIGIN = 0x80000000, LENGTH = 0x4000
 }
 
+PHDRS
+{
+    flash PT_LOAD;
+    ram PT_NULL;
+}
+
 SECTIONS
 {
-	.text : ALIGN(4)
-	{
-		*(.text)
-	} >flash
+    .text : ALIGN(4)
+    {
+        *(.text)
+    } >flash AT>flash :flash
+
+    /* Read-only data. */
+    .rodata : ALIGN(4)
+    {
+        _rodata_s = .;
+        *(.rodata)
+        _rodata_e = .;
+    } >flash AT>flash :flash
 
     /*
-     * The start of flash data is right after all of code in flash.
-     */
-    flash_sdata = .;
-
-	/* Read-only data. */
-	.rodata : ALIGN(4)
-	{
-		*(.rodata)
-	} >flash
-
-	/*
      * Read-write data (initialized)
      */
-	.data : ALIGN(4)
-	{
-		*(.data)
-	} >ram
+    .data : ALIGN(4)
+    {
+        _data_s = .;
+        *(.data)
+        _data_e = .;
+    } >ram AT>flash :ram
 
-	/*
+    /*
      * Read-write data (uninitialized) and stack
      */
-	.bss : ALIGN(4)
-	{
-		*(COMMON)
-		*(.bss)
-	} >ram
-
-	/*
-     * The compiler may produce other sections, by default it will put them in
-     * a segment with the same name. Simply add stuff here as needed.
-     */
+    .bss : ALIGN(4)
+    {
+        _bss_s = .;
+        *(COMMON)
+        *(.bss)
+        _bss_e = .;
+    } >ram AT>ram :ram
 }
