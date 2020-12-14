@@ -238,6 +238,23 @@ PHDRS
 \end{lstlisting}
 
             \subsection{Sections}
+                The \lstinline|SECTIONS| command controls exactly where input sections are placed into output sections, their order in the output file, and to which output sections they are allocated.\cite{gnuldOutputSections}
+
+                If you do not use a SECTIONS command, the linker places each input section into an identically named output section in the order that the sections are first encountered in the input files. If all input sections are present in the first file, for example, the order of sections in the output file will match the order in the first input file.\cite{gnuldOutputSections}
+
+                In a section definition, you can specify the contents of an output section by listing particular input files, by listing particular input-file sections, or by a combination of the two. You can also place arbitrary data in the section, and define symbols relative to the beginning of the section.\cite{gnuldOutputSections}
+\begin{verbatim}
+SECTIONS {
+    secname : {
+        filename( section , section, ... )
+    }
+}
+\end{verbatim}
+                The whitespace around \lstinline|secname| is required, so that the section name is unambiguous. The other whitespace shown is optional. You do need the colon \lstinline|:| and the braces \lstinline|{}|, however.\cite{gnuldOutputSections}
+
+                The linker will not create output sections which do not have any contents.\cite{gnuldOutputSections}
+
+                The \lstinline|*( COMMON )| notation can be used to specify where uninitialized data should be placed in the output file.\cite{gnuldOutputSections}
 
             \subsection{Options}
 
