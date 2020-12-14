@@ -33,9 +33,9 @@
  * undefined behavior.
  */
 .section .bss
-.align 16
+.align 4
 stack_bottom:
-.skip 16384 # 16 KiB
+.skip 64 # 64 Bytes
 stack_top:
 
 /*
