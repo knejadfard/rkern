@@ -11,7 +11,7 @@
  * undefined behavior.
  */
 .section .bss
-.align 4
+.align 16
 stack_bottom:
 .skip 64 # 64 Bytes
 stack_top:
