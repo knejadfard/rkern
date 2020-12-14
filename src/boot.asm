@@ -1,19 +1,11 @@
 /*
- * The multiboot standard does not define the value of the stack pointer register
- * (esp) and it is up to the kernel to provide a stack. This allocates room for a
- * small stack by creating a symbol at the bottom of it, then allocating 16384
- * bytes for it, and finally creating a symbol at the top. The stack grows
- * downwards on x86. The stack is in its own section so it can be marked nobits,
- * which means the kernel file is smaller because it does not contain an
- * uninitialized stack. The stack on x86 must be 16-byte aligned according to the
- * System V ABI standard and de-facto extensions. The compiler will assume the
- * stack is properly aligned and failure to align the stack will result in
- * undefined behavior.
+ * According to the standard RISC-V calling convention, the stack grows downward
+ * and is always kept 16-byte aligned.
  */
 .section .bss
-.align 4
+.align 16
 stack_bottom:
-.skip 64 # 64 Bytes
+.skip 12288 # 12 KiB
 stack_top:
 
 /*
@@ -46,8 +38,8 @@ _start:
      * aligned at the time of the call instruction (which afterwards pushes
      * the return pointer of size 4 bytes). The stack was originally 16-byte
      * aligned above and we've since pushed a multiple of 16 bytes to the
-     * stack since (pushed 0 bytes so far) and the alignment is thus
-     * preserved and the call is well defined.
+     * stack (pushed 0 bytes so far) and the alignment is thus preserved and
+     * the call is well defined.
      */
     call kernel_main
 
