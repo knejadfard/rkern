@@ -61,4 +61,4 @@ jobs:
           KEY_JSON_SECRET: ${{ secrets.RKERN_ANALYZER_JSON_KEY_SECRET }}
           RKA_SERVER: https://rkern-analyzer.uc.r.appspot.com
         run: |
-          ${GITHUB_WORKSPACE}/.github/workflows/rka_client -keyPath ${GITHUB_WORKSPACE}/.github/workflows/key.json.asc -rkaBaseUrl ${RKA_SERVER} -sha1 ${RKERN_SHA} -kernel rkern.bin kernel.s
+          ${GITHUB_WORKSPACE}/.github/workflows/rka_client -keyPath ${GITHUB_WORKSPACE}/.github/workflows/key.json.asc -rkaBaseUrl ${RKA_SERVER} -sha1 ${RKERN_SHA} -kernel rkern.bin link.map kernel.s
