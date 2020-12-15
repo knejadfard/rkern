@@ -20,17 +20,9 @@ I am planning to take notes at all stages of this project and author a paper/doc
 - [ ] Implement I2C, SPI, and UART drivers.
 
 ## Directly Running the Kernel Binary Using Qemu
-You can use the utility script `run-qemu.sh` to run the kernel binary directly in qemu, without having to use any iso images. The utility script executes the following command:
+Run the kernel that is compiled for riscv32 target in Qemu with 16 KiB of memory available:
 ```
-qemu-system-i386 -kernel build/rkern.bin
-```
-
-## Generating .iso Image
-The utility script `make-iso.sh` uses `grub-mkrescue` to generate a bootable iso image, with a very basic `grub.cfg` file that is located in the `iso/` folder. This process has a dependency on the `xorriso` package.
-
-In order to run the iso image using qemu:
-```
-qemu-system-i386 -cdrom build/rkern.iso
+qemu-system-riscv32 -m 16K -kernel build/rkern.bin
 ```
 
 ## Special Thanks
