@@ -23,7 +23,21 @@ Note: The roadmap is a work-in-progress and will be updated regularly.
 - [ ] Implement SPI driver.
 - [ ] Implement UART driver.
 
-## Directly Running the Kernel Binary Using Qemu
+## Building the Kernel Binary
+Currently only the LLVM/Clang is supported. While there is some preliminary sections in the CMake file for making GCC/G++ compilation work, it is currently in a non-working state. Support for GCC/G++ will be added soon.
+
+Assuming you have LLVM/Clang available on the machine running the build, you can build the kernel using the following:
+```
+# assuming you are in the project's source root
+mkdir build
+cd build
+CXX=clang++ cmake ../
+make
+```
+
+The addition of `CXX=clang++` makes sure CMake uses `clang++` instead of `g++` as the compiler when both are available on the machine.
+
+## Run the Kernel Binary Using Qemu
 Run the kernel that is compiled for riscv32 target in Qemu with 16 KiB of memory available:
 ```
 qemu-system-riscv32 -m 16K -kernel build/rkern.bin
