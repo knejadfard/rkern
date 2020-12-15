@@ -44,4 +44,4 @@ qemu-system-riscv32 -m 16K -kernel build/rkern.bin
 ```
 
 ## Special Thanks
-I have to dedicate this section to specially thank the makers and contributors of https://wiki.osdev.org.
+I have to dedicate this section to specially thank the makers and contributors of https://wiki.osdev.org. I have learned a lot from the content available there. The rest of the resources used are noted in the research paper/report and will be updated as the document is further developed.
