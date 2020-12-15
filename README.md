@@ -12,12 +12,16 @@ I have always been interested in how kernels and the bridge between software and
 I am planning to take notes at all stages of this project and author a paper/document covering everything that I learn from this project. Based on how things look like in the end, I will have to decide if the document is worthy of publishing anywhere.
 
 ## Roadmap
+Note: The roadmap is a work-in-progress and will be updated regularly.
 - [x] Compile and run a bare-bones kernel in C.
 - [x] Migrate the kernel source to C++ (will probablly have to be pure C++ without any libraries).
-- [ ] Migrate from Make to CMake and add ability to use GCC or Clang using a CMake option.
-- [ ] Compile with risc-v target and run the kernel on a dev board ([HiFive1 Rev B](https://www.sifive.com/boards/hifive1-rev-b)).
-- [ ] Evaluate if libc++, libunwind, and friends can be integrated into the kernel.
-- [ ] Implement I2C, SPI, and UART drivers.
+- [x] Migrate from Make to CMake.
+- [x] Compile with riscv32 target.
+- [ ] Add ability to compile with either GCC or LLVM toolchains.
+- [ ] Run the kernel on a dev board ([HiFive1 Rev B](https://www.sifive.com/boards/hifive1-rev-b)).
+- [ ] Implement I2C driver and test with an OLED display peripheral.
+- [ ] Implement SPI driver.
+- [ ] Implement UART driver.
 
 ## Directly Running the Kernel Binary Using Qemu
 Run the kernel that is compiled for riscv32 target in Qemu with 16 KiB of memory available:
