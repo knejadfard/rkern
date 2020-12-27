@@ -17,16 +17,14 @@ Note: The roadmap is a work-in-progress and will be updated regularly.
 - [x] Migrate the kernel source to C++ (will probablly have to be pure C++ without any libraries).
 - [x] Migrate from Make to CMake.
 - [x] Compile with riscv32 target.
-- [ ] Add ability to compile with either GCC or LLVM toolchains.
+- [x] Add ability to compile with either GCC or LLVM toolchains.
 - [ ] Run the kernel on a dev board ([HiFive1 Rev B](https://www.sifive.com/boards/hifive1-rev-b)).
 - [ ] Implement I2C driver and test with an OLED display peripheral.
 - [ ] Implement SPI driver.
 - [ ] Implement UART driver.
 
 ## Building the Kernel Binary
-Currently only the LLVM/Clang is supported. While there is some preliminary sections in the CMake file for making GCC/G++ compilation work, it is currently in a non-working state. Support for GCC/G++ will be added soon.
-
-Assuming you have LLVM/Clang available on the machine running the build, you can build the kernel using the following:
+In order to build the kernel using the LLVM toolchain, the following flow can be used:
 ```
 # assuming you are in the project's source root
 mkdir build
@@ -35,7 +33,17 @@ CXX=clang++ cmake ../
 make
 ```
 
-The addition of `CXX=clang++` makes sure CMake uses `clang++` instead of `g++` as the compiler when both are available on the machine.
+Prefixing the `cmake` invocation with `CXX=clang++` ensures that CMake will recognize `clang++` as the C++ compiler without overriding this for the whole system.
+
+In order to build the kernel using the GNU toolchain, you must first build a cross-compiler. For this project, given the current scope of working with HiFive1 Rev B board, the desired architecture is rv32imac with ilp32 as the ABI.
+Assuming the `bin/` directory of the cross-compiler toolchain is in path, the following flow can be used for compiling using the GNU toolchain:
+```
+# assuming you are in the project's source root
+mkdir build
+cd build
+CXX=riscv32-unknown-elf-g++ cmake ../
+make
+```
 
 ## Run the Kernel Binary Using Qemu
 Run the kernel that is compiled for riscv32 target in Qemu with 16 KiB of memory available:
