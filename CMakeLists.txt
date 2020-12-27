@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 project(rkern CXX)
 
+set(CMAKE_SYSTEM_NAME Generic)
+set(CMAKE_SYSTEM_PROCESSOR riscv)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
@@ -9,7 +12,7 @@ option(USE_LLD "Use LLVM's LLD as linker (must use Clang for this to take effect
 option(GEN_ASM "Generate assembly output to file during the build process" ON)
 option(GEN_LINK_MAP "Generate linker mapping file during the build process" ON)
 
-add_executable(rkern ${PROJECT_SOURCE_DIR}/src/kernel.cpp ${PROJECT_SOURCE_DIR}/src/boot.asm)
+add_executable(rkern ${PROJECT_SOURCE_DIR}/src/kernel.cpp ${PROJECT_SOURCE_DIR}/src/boot.S)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "rkern.bin")
 
@@ -24,9 +27,7 @@ if(GEN_ASM)
 endif()
 
 if(GEN_LINK_MAP)
-    # It looks like with LLVM/Clang, this flag is --Map or -M, whereas
-    # with GCC/G++ it is -Map. When adding GCC compilation compatibility
-    # this must be considered.
+    # the following compiler flag is acceptable by both GCC and LLVM
     target_link_options(rkern PRIVATE "LINKER:--Map,link.map")
 endif()
 
@@ -44,7 +45,6 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     endif()
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # GCC
-    target_compile_options(rkern PUBLIC -m32)
     target_link_options(rkern PUBLIC "LINKER:--script=${PROJECT_SOURCE_DIR}/src/linker.ld")
 endif()
 
