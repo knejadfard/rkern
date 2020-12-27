@@ -12,7 +12,7 @@ option(USE_LLD "Use LLVM's LLD as linker (must use Clang for this to take effect
 option(GEN_ASM "Generate assembly output to file during the build process" ON)
 option(GEN_LINK_MAP "Generate linker mapping file during the build process" ON)
 
-add_executable(rkern ${PROJECT_SOURCE_DIR}/src/kernel.cpp ${PROJECT_SOURCE_DIR}/src/boot.asm)
+add_executable(rkern ${PROJECT_SOURCE_DIR}/src/kernel.cpp ${PROJECT_SOURCE_DIR}/src/boot.S)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "rkern.bin")
 
