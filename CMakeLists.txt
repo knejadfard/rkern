@@ -27,9 +27,7 @@ if(GEN_ASM)
 endif()
 
 if(GEN_LINK_MAP)
-    # It looks like with LLVM/Clang, this flag is --Map or -M, whereas
-    # with GCC/G++ it is -Map. When adding GCC compilation compatibility
-    # this must be considered.
+    # the following compiler flag is acceptable by both GCC and LLVM
     target_link_options(rkern PRIVATE "LINKER:--Map,link.map")
 endif()
 
