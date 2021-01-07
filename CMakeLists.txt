@@ -28,7 +28,7 @@ endif()
 
 if(GEN_LINK_MAP)
     # the following compiler flag is acceptable by both GCC and LLVM
-    target_link_options(rkern PRIVATE "LINKER:--Map,link.map")
+    target_link_options(rkern PRIVATE "LINKER:--Map,linker_map.txt")
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
