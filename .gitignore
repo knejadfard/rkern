@@ -1,1 +1,5 @@
 build/
+cmake-build*/
+
+# Ignore IDE folders
+.idea/
