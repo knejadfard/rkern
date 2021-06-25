@@ -1,14 +1,4 @@
 /*
- * According to the standard RISC-V calling convention, the stack grows downward
- * and is always kept 16-byte aligned.
- */
-.section .bss
-.align 16
-stack_bottom:
-.skip 12288 # 12 KiB
-stack_top:
-
-/*
  * The linker script specifies _start as the entry point to the kernel and the
  * bootloader will jump to this position once the kernel has been loaded. It
  * doesn't make sense to return from this function as the bootloader is gone.
@@ -20,7 +10,7 @@ _start:
     /*
      * Setup stack
      */
-    la sp, stack_top
+    la sp, _stack_top
 
     /*
      * This is a good place to initialize crucial processor state before the

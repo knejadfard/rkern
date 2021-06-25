@@ -34,6 +34,17 @@ SECTIONS
     } >flash AT>flash :flash
 
     /*
+     * Read-write data (uninitialized)
+     */
+    .bss : ALIGN(4)
+    {
+        _bss_s = .;
+        *(COMMON)
+        *(.bss)
+        _bss_e = .;
+    } >ram AT>ram :ram
+
+    /*
      * Read-write data (initialized)
      */
     .data : ALIGN(4)
@@ -44,13 +55,14 @@ SECTIONS
     } >ram AT>flash :ram
 
     /*
-     * Read-write data (uninitialized) and stack
+     * According to the standard RISC-V calling convention, the stack grows downward
+     * and is always kept 16-byte aligned.
      */
-    .bss : ALIGN(4)
+    .stack (NOLOAD) : ALIGN(16)
     {
-        _bss_s = .;
-        *(COMMON)
-        *(.bss)
-        _bss_e = .;
-    } >ram AT>ram :ram
+        _stack_bottom = .;
+        /* 12KiB */
+        . = . + 0x3000;
+        _stack_top = .;
+    } >ram :ram
 }
