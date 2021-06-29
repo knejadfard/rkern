@@ -17,6 +17,10 @@ jobs:
           sudo ln -s /usr/bin/ld.lld-9 /usr/bin/ld.lld
           sudo ln -s /usr/bin/ld.lld /usr/bin/ld
           ls -l /usr/bin | grep ld
+          echo "Printing ld.lld's version>>>>>>>"
+          ld.lld --version
+          echo "Printing ld's version>>>>>>>"
+          ld --version
 
       - name: Echo CMake Version
         shell: bash
@@ -25,14 +29,6 @@ jobs:
       - name: Echo Clang++ Version
         shell: bash
         run:  clang++ --version
-
-      - name: Echo lld Version
-        shell: bash
-        run: ld.lld --version
-
-      - name: Echo ld Version
-        shell: bash
-        run: ld --version
 
       - name: Checkout RKern
         uses: actions/checkout@v2
