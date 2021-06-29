@@ -29,7 +29,7 @@ SECTIONS
     .rodata : ALIGN(4)
     {
         _rodata_s = .;
-        *(.rodata)
+        *(.rodata*)
         _rodata_e = .;
     } >flash AT>flash :flash
 
