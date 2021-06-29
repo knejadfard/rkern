@@ -11,5 +11,5 @@
 extern "C" void kernel_main()
 {
     rkern::Terminal terminal;
-	terminal.write_string("Hello, kernel World!\n");
+    terminal.write_string("Hello, kernel World!\n");
 }
