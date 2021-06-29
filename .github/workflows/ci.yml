@@ -26,13 +26,13 @@ jobs:
         shell: bash
         run:  clang++ --version
 
-      - name: Echo ld Version
-        shell: bash
-        run: ld --version
-
       - name: Echo lld Version
         shell: bash
         run: ld.lld --version
+
+      - name: Echo ld Version
+        shell: bash
+        run: ld --version
 
       - name: Checkout RKern
         uses: actions/checkout@v2
