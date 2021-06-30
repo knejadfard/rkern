@@ -14,9 +14,13 @@ jobs:
         shell: bash
         run: |
           sudo unlink /usr/bin/ld
-          sudo ln -s /usr/bin/ld.lld-9 /usr/bin/ld.lld
+          sudo ln -s /usr/bin/ld.lld-11 /usr/bin/ld.lld
           sudo ln -s /usr/bin/ld.lld /usr/bin/ld
           ls -l /usr/bin | grep ld
+          echo "Printing ld.lld's version>>>>>>>"
+          /usr/bin/ld.lld --version
+          echo "Printing ld's version>>>>>>>"
+          /usr/bin/ld --version
 
       - name: Echo CMake Version
         shell: bash
@@ -25,14 +29,6 @@ jobs:
       - name: Echo Clang++ Version
         shell: bash
         run:  clang++ --version
-
-      - name: Echo ld Version
-        shell: bash
-        run: ld --version
-
-      - name: Echo lld Version
-        shell: bash
-        run: ld.lld --version
 
       - name: Checkout RKern
         uses: actions/checkout@v2
@@ -47,7 +43,7 @@ jobs:
       - name: Configure CMake
         shell: bash
         working-directory: ${{runner.workspace}}/build
-        run: CC=clang CXX=clang++ cmake ${GITHUB_WORKSPACE} -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DGEN_ASM=ON -DUSE_LLD=ON
+        run: CC=clang-11 CXX=clang++-11 cmake ${GITHUB_WORKSPACE} -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DGEN_ASM=ON -DUSE_LLD=ON
 
       - name: Build
         shell: bash
