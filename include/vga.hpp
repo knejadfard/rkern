@@ -1,6 +1,8 @@
 #ifndef RKERN_VGA_HPP
 #define RKERN_VGA_HPP
 
+#include <types.hpp>
+
 namespace rkern::vga {
 
     // Hardware text mode color constants.

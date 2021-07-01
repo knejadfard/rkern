@@ -11,6 +11,7 @@ option(STRIP_SYMBOLS "Strip symbols when linking" OFF)
 option(USE_LLD "Use LLVM's LLD as linker (must use Clang for this to take effect)" ON)
 option(GEN_ASM "Generate assembly output to file during the build process" ON)
 option(GEN_LINK_MAP "Generate linker mapping file during the build process" ON)
+option(UNIT_TESTS "Build unit tests" ON)
 
 add_executable(rkern ${PROJECT_SOURCE_DIR}/src/kernel.cpp ${PROJECT_SOURCE_DIR}/src/boot.S)
 
@@ -49,3 +50,8 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 endif()
 
 enable_language(ASM)
+
+if(UNIT_TESTS)
+    enable_testing()
+    add_subdirectory(test)
+endif()

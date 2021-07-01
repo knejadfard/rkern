@@ -1,7 +1,9 @@
 #ifndef RKERN_TERMINAL_HPP
 #define RKERN_TERMINAL_HPP
 
-#include "vga.hpp"
+#include <types.hpp>
+#include <utility.hpp>
+#include <vga.hpp>
 
 namespace rkern {
 
