@@ -23,13 +23,15 @@ SECTIONS
     .text : ALIGN(4)
     {
         *(.text)
+        *(.text.*)
     } >flash AT>flash :flash
 
     /* Read-only data. */
     .rodata : ALIGN(4)
     {
         _rodata_s = .;
-        *(.rodata*)
+        *(.rodata)
+        *(.rodata.*)
         _rodata_e = .;
     } >flash AT>flash :flash
 
