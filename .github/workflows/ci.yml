@@ -22,6 +22,14 @@ jobs:
           echo "Printing ld's version>>>>>>>"
           /usr/bin/ld --version
 
+      - name: Install Catch2
+        shell: bash
+        run: |
+          git clone --branch v2.x https://github.com/catchorg/Catch2.git
+          cd Catch2
+          cmake -Bbuild -H. -DBUILD_TESTING=OFF
+          sudo cmake --build build/ --target install
+
       - name: Echo CMake Version
         shell: bash
         run: cmake --version
