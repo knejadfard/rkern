@@ -50,3 +50,11 @@ The following tables show the available GPIO instance and its memory map for HiF
 \end{table}
 
 Per FE310-G002's manual\cite{fe310g002man}, only naturally aligned 32-bit memory accesses are supported. Moreover, registers marked with an asterisk in table \ref{tab:gpio_memory_map} are asynchronously reset to 0. Registers without an asterisk are synchronously reset to 0.
+
+\subsection{On-board LEDs}
+HiFive1 Rev B has three LEDs on the board, which may be accessed via the following GPIO pins:
+\begin{itemize}
+    \item LED 0 - GPIO 22
+    \item LED 1 - GPIO 19
+    \item LED 2 - GPIO 21
+\end{itemize}
