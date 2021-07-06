@@ -9,8 +9,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 option(STRIP_SYMBOLS "Strip symbols when linking" OFF)
 option(USE_LLD "Use LLVM's LLD as linker (must use Clang for this to take effect)" ON)
-option(GEN_ASM "Generate assembly output to file during the build process" ON)
-option(GEN_LINK_MAP "Generate linker mapping file during the build process" ON)
+option(SAVE_ASM "Save assembly output during the build process" ON)
+option(SAVE_LINKER_MAP_FILE "Save linker mapping to a file during the build process" ON)
 option(UNIT_TESTS "Build unit tests" ON)
 
 add_executable(rkern ${PROJECT_SOURCE_DIR}/src/kernel.cpp ${PROJECT_SOURCE_DIR}/src/boot.S)
@@ -22,12 +22,12 @@ target_include_directories(rkern PUBLIC "${PROJECT_SOURCE_DIR}/include")
 target_compile_options(rkern PUBLIC -fno-exceptions -fno-rtti -ffreestanding -fno-builtin -nostdlib -nostdinc -nostdinc++)
 target_link_options(rkern PUBLIC -static -nostdlib)
 
-if(GEN_ASM)
+if(SAVE_ASM)
     # the following compiler flag is acceptable by both GCC and LLVM
     target_compile_options(rkern PUBLIC -save-temps)
 endif()
 
-if(GEN_LINK_MAP)
+if(SAVE_LINKER_MAP_FILE)
     # the following compiler flag is acceptable by both GCC and LLVM
     target_link_options(rkern PRIVATE "LINKER:--Map,linker_map.txt")
 endif()
