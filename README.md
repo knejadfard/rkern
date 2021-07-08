@@ -50,10 +50,28 @@ make
 ```
 
 ## Run the Kernel Binary Using Qemu
-Run the kernel that is compiled for riscv32 target in Qemu with 16 KiB of memory available:
+Run the kernel that is built for riscv32 target using Sifive's HiFive1 Rev B board in Qemu:
 ```
-qemu-system-riscv32 -m 16K -kernel build/rkern.bin
+qemu-system-riscv32 -M sifive_e,revb=true -kernel rkern.bin
 ```
+
+## Debug the Kernel Binary Using Qemu and GDB
+The following command starts Qemu with the kernel binary, while pausing execution of CPU instructions and accepting a TCP connection from GDB on port 1234:
+```
+qemu-system-riscv32 -M sifive_e,revb=true -gdb tcp::1234 -S -kernel rkern.bin
+```
+
+Next, start GDB:
+```
+riscv32-unknown-elf-gdb rkern.bin
+```
+
+After GDB starts up and prompts for commands, it should be instructed to connect to Qemu's remote TCP port:
+```
+(gdb) target remote localhost:1234
+```
+
+At this point, you may want to set up breakpoints. Then, you can step through the instructions and debug.
 
 ## Special Thanks
 I have to dedicate this section to specially thank the makers and contributors of https://wiki.osdev.org. I have learned a lot from the content available there. The rest of the resources used are noted in the research paper/report and will be updated as the document is further developed.
