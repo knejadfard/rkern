@@ -124,5 +124,16 @@
         \section{Attaching Terminal}
             \input{texfiles/hifive_revb/attaching_terminal.tex}
 
+        \section{Debugging With GDB and Qemu}
+\begin{lstlisting}
+qemu-system-riscv32 -M sifive_e,revb=true -s -S -kernel rkern.bin
+riscv32-unknown-elf-gdb rkern.bin
+\end{lstlisting}
+
+Once in gdb:
+\begin{lstlisting}
+target remote localhost:1234
+\end{lstlisting}
+
     \printbibliography
 \end{document}
