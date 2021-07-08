@@ -22,7 +22,12 @@ SECTIONS
 {
     .text : ALIGN(4)
     {
+        /*
+         * boot.S.o must come first to ensure _start symbol is placed at the beginning of flash. Otherwise the
+         * bootloader fails to boot the kernel code.
+         */
         */boot.S.o(.text)
+
         *(.text)
         *(.text.*)
     } >flash AT>flash :flash
