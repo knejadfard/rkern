@@ -73,5 +73,17 @@ After GDB starts up and prompts for commands, it should be instructed to connect
 
 At this point, you may want to set up breakpoints. Then, you can step through the instructions and debug.
 
+## Flashing the Kernel
+In order to flash the kernel to a HiFive1 Rev B board (at the time of this writing this is the only supported board):
+```
+openocd -f share/openocd/scripts/board/sifive-hifive1-revb.cfg -c "program rkern.bin verify reset exit"
+```
+
+A helper script has been provided under `rkern/support/scripts` folder to run the above command::
+```
+make
+../support/scripts/upload.bash /path/to/share/openocd/scripts/board/sifive-hifive1-revb.cfg rkern.bin
+```
+
 ## Special Thanks
 I have to dedicate this section to specially thank the makers and contributors of https://wiki.osdev.org. I have learned a lot from the content available there. The rest of the resources used are noted in the research paper/report and will be updated as the document is further developed.
