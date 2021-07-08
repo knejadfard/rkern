@@ -22,6 +22,7 @@ SECTIONS
 {
     .text : ALIGN(4)
     {
+        */boot.S.o(.text)
         *(.text)
         *(.text.*)
     } >flash AT>flash :flash
