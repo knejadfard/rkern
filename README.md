@@ -50,9 +50,39 @@ make
 ```
 
 ## Run the Kernel Binary Using Qemu
-Run the kernel that is compiled for riscv32 target in Qemu with 16 KiB of memory available:
+Run the kernel that is built for riscv32 target using Sifive's HiFive1 Rev B board in Qemu:
 ```
-qemu-system-riscv32 -m 16K -kernel build/rkern.bin
+qemu-system-riscv32 -M sifive_e,revb=true -kernel rkern.bin
+```
+
+## Debug the Kernel Binary Using Qemu and GDB
+The following command starts Qemu with the kernel binary, while pausing execution of CPU instructions and accepting a TCP connection from GDB on port 1234:
+```
+qemu-system-riscv32 -M sifive_e,revb=true -gdb tcp::1234 -S -kernel rkern.bin
+```
+
+Next, start GDB:
+```
+riscv32-unknown-elf-gdb rkern.bin
+```
+
+After GDB starts up and prompts for commands, it should be instructed to connect to Qemu's remote TCP port:
+```
+(gdb) target remote localhost:1234
+```
+
+At this point, you may want to set up breakpoints. Then, you can step through the instructions and debug.
+
+## Flashing the Kernel
+In order to flash the kernel to a HiFive1 Rev B board (at the time of this writing this is the only supported board):
+```
+openocd -f share/openocd/scripts/board/sifive-hifive1-revb.cfg -c "program rkern.bin verify reset exit"
+```
+
+A helper script has been provided under `rkern/support/scripts` folder to run the above command::
+```
+make
+../support/scripts/upload.bash /path/to/share/openocd/scripts/board/sifive-hifive1-revb.cfg rkern.bin
 ```
 
 ## Special Thanks

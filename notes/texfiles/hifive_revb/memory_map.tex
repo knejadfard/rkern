@@ -1,0 +1,95 @@
+The following tables show the FE310-G002 memory map along with relevant attributes:\cite{fe310g002manMMap}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{| p{3cm} | c | c | p{3cm} |}
+        \hline
+        \textbf{Description} & \textbf{Base} & \textbf{Top} & \textbf{Attributes}\\
+        \hline
+        \hline
+        Debug & 0x0000\_0000 & 0x0000\_0FFF & RWX A\\
+        \hline
+    \end{tabular}
+    \caption{Debug Address Space}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{| p{4cm} | c | c | p{3cm} |}
+        \hline
+        \textbf{Description} & \textbf{Base} & \textbf{Top} & \textbf{Attributes}\\
+        \hline
+        Mode Select & 0x0000\_1000 & 0x0000\_1FFF & R XC\\
+        Reserved & 0x0000\_2000 & 0x0000\_2FFF & \\
+        Error Device & 0x0000\_3000 & 0x0000\_3FFF & RWX A\\
+        Reserved & 0x0000\_4000 & 0x0000\_FFFF & \\
+        Mask ROM & 0x0001\_0000 & 0x0001\_1FFF & R XC\\
+        Reserved & 0x0001\_2000 & 0x0001\_FFFF & \\
+        OTP Memory Region & 0x0002\_0000 & 0x0002\_1FFF & R XC\\
+        Reserved & 0x0002\_2000 & 0x001F\_FFFF & \\
+        \hline
+    \end{tabular}
+    \caption{On-Chip Non Volatile Memory}
+\end{table}
+
+\begin{longtable}[H]{| p{4.5cm} | p{3cm} | p{3cm} | p{2.5cm} |}
+    \hline
+    \textbf{Description} & \textbf{Base} & \textbf{Top} & \textbf{Attributes}\\
+    \hline
+    \hline
+    \endfirsthead
+    CLINT & 0x0200\_0000 & 0x0200\_FFFF & RW A\\
+    Reserved & 0x0201\_0000 & 0x07FF\_FFFF & \\
+    E31 ITIM (8 KiB) & 0x0800\_0000 & 0x0800\_1FFF & RWX A\\
+    Reserved & 0x0800\_2000 & 0x0BFF\_FFFF & \\
+    PLIC & 0x0C00\_0000 & 0x0FFF\_FFFF & RW A\\
+    AON & 0x1000\_0000 & 0x1000\_0FFF & RW A\\
+    Reserved & 0x1000\_1000 & 0x1000\_7FFF & \\
+    PRCI & 0x1000\_8000 & 0x1000\_8FFF & RW A\\
+    Reserved & 0x1000\_9000 & 0x1000\_FFFF & \\
+    OTP Control & 0x1001\_0000 & 0x1001\_0FFF & RW A\\
+    Reserved & 0x1001\_1000 & 0x1001\_1FFF & \\
+    GPIO & 0x1001\_2000 & 0x1001\_2FFF & RW A\\
+    UART 0 & 0x1001\_3000 & 0x1001\_3FFF & RW A\\
+    QSPI 0 & 0x1001\_4000 & 0x1001\_4FFF & RW A\\
+    PWM 0 & 0x1001\_5000 & 0x1001\_5FFF & RW A\\
+    I2C 0 & 0x1001\_6000 & 0x1001\_6FFF & RW A\\
+    Reserved & 0x1001\_7000 & 0x1002\_2FFF & \\
+    UART 1 & 0x1002\_3000 & 0x1002\_3FFF & RW A\\
+    SPI 1 & 0x1002\_4000 & 0x1002\_4FFF & RW A\\
+    PWM 1 & 0x1002\_5000 & 0x1002\_5FFF & RW A\\
+    Reserved & 0x1002\_6000 & 0x1003\_3FFF & \\
+    SPI 2 & 0x1003\_4000 & 0x1003\_4FFF & RW A\\
+    PWM 2 & 0x1003\_5000 & 0x1003\_5FFF & RW A\\
+    Reserved & 0x1003\_6000 & 0x1FFF\_FFFF & \\
+    \hline
+    \caption{On-Chip Peripherals}
+\end{longtable}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{| p{4.5cm} | p{3cm} | p{3cm} | p{2.5cm} |}
+        \hline
+        \textbf{Description} & \textbf{Base} & \textbf{Top} & \textbf{Attributes}\\
+        \hline
+        \hline
+        QSPI 0 Flash (512 MiB) & 0x2000\_0000 & 0x3FFF\_FFFF & R XC\\
+        Reserved & 0x4000\_0000 & 0x7FFF\_FFFF & \\
+        \hline
+    \end{tabular}
+    \caption{Off-Chip Non-volatile Memory}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{| p{4.5cm} | p{3cm} | p{3cm} | p{2.5cm} |}
+        \hline
+        \textbf{Description} & \textbf{Base} & \textbf{Top} & \textbf{Attributes}\\
+        \hline
+        \hline
+        E31 DTIM (16 KiB) & 0x8000\_0000 & 0x8000\_3FFF & RWX A\\
+        Reserved & 0x8000\_4000 & 0xFFFF\_FFFF & \\
+        \hline
+    \end{tabular}
+    \caption{On-Chip Volatile Memory}
+\end{table}
