@@ -19,13 +19,13 @@ Note: The roadmap is a work-in-progress and will be updated regularly.
 - [x] Migrate from Make to CMake.
 - [x] Compile with riscv32 target.
 - [x] Add ability to compile with either GCC or LLVM toolchains.
-- [ ] Write basic facilities for working with memory-mapped devices
-- [ ] Write basic GPIO driver on top of memory-mapped device facilities
-- [ ] Write LED driver using GPIO facilities (this can be used on the board as POC)
-- [ ] Run the kernel on a dev board ([HiFive1 Rev B](https://www.sifive.com/boards/hifive1-rev-b)).
+- [x] Write basic facilities for working with memory-mapped devices
+- [x] Write basic GPIO driver on top of memory-mapped device facilities
+- [ ] Write RGB LED driver using GPIO facilities (this can be used on the board as POC)
+- [x] Run the kernel on a dev board ([HiFive1 Rev B](https://www.sifive.com/boards/hifive1-rev-b)).
+- [ ] Implement UART driver and use it for serial output as POC
 - [ ] Implement I2C driver and test with an OLED display peripheral.
 - [ ] Implement SPI driver.
-- [ ] Implement UART driver.
 
 ## Building the Kernel Binary
 In order to build the kernel using the LLVM toolchain, the following flow can be used:

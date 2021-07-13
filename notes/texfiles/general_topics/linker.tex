@@ -1,7 +1,7 @@
-\section{What Do Linkers Do?}
+\subsection{What Do Linkers Do?}
 TODO: use reference http://www.bravegnu.org/gnu-eprog/linker.html
 
-\section{Linker Script}
+\subsection{Linker Script}
 A linker script can define 4 pieces of information:
 \begin{enumerate}
     \item \textbf{Memory layout}
@@ -10,7 +10,7 @@ A linker script can define 4 pieces of information:
     \item \textbf{Symbols} - Variables that have to be injected into the program at link time.
 \end{enumerate}\cite{memfaultLinkerScripts}
 
-\subsection{Memory Layout}
+\subsubsection{Memory Layout}
 In order to allocate program space, the linker needs to know how much memory is available, and at what addresses that memory exists. This is what the \verb|MEMORY| definition in the linker script is for.
 
 The syntax for \verb|MEMORY| is as follows:
@@ -29,7 +29,7 @@ Where:
     \item \verb|len| is the size of the memory region in bytes.
 \end{itemize}
 
-\subsection{Program Headers}
+\subsubsection{Program Headers}
 Also known as \textit{segments}, the \textit{program headers} describe how a program is loaded in memory from an ELF object file format. While the linker creates reasonable program headers by default, sometimes it may be necessary to customize them.\cite{gnuldProgramHeaders}
 
 In order to observe the program headers of an ELF file, the following command may be used:
@@ -75,7 +75,7 @@ PHDRS
 }
 \end{lstlisting}
 
-\subsection{Sections}
+\subsubsection{Sections}
 The \lstinline|SECTIONS| command controls exactly where input sections are placed into output sections, their order in the output file, and to which output sections they are allocated.\cite{gnuldOutputSections}
 
 If you do not use a SECTIONS command, the linker places each input section into an identically named output section in the order that the sections are first encountered in the input files. If all input sections are present in the first file, for example, the order of sections in the output file will match the order in the first input file.\cite{gnuldOutputSections}
@@ -94,6 +94,6 @@ The linker will not create output sections which do not have any contents.\cite{
 
 The \lstinline|*( COMMON )| notation can be used to specify where uninitialized data should be placed in the output file.\cite{gnuldOutputSections}
 
-\subsection{Options}
+\subsubsection{Options}
 
-\subsection{Symbols}
+\subsubsection{Symbols}
